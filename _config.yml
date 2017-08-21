@@ -1,0 +1,58 @@
+
+# SEO settings
+title: "kwap"
+title2: "in space" # default: ""
+description: "blog about stuff"
+keywords: "tech, thinking, books"
+url: https://kwap.io #kwap.github.io/kwap # site url
+baseurl: "" # apply repo name if use it under gh-pages branch
+# baseurl: null # apply null if repo name is something like username.github.io
+
+google_analytics: UA-XXXXX-XX
+repo: http://github.com/heiswayi/thinkspace
+disqus_shortname: "hnbloggithub"
+twitter_username: "o3tker"
+comments: false
+
+# Build settings
+permalink   : /:year-:month-:day/:title/
+markdown    : kramdown
+highlighter : rouge
+
+source: ./
+destination: ./_site
+
+# Sass configuration
+sass:
+  sass_dir: assets/scss
+  style: compressed # expanded
+
+# Author settings
+author:
+  name     : "Piotr Kwapin"
+  job      : "Software Engineer, Thinker, Tinkerer"
+  bio      : "The truth is not for all men, but only for those who seek it."
+  thumb    : "https://en.gravatar.com/userimage/6180910/0847ddba8af46c077a45c25c69984d34.jpg?size=200"
+  email    : piotr.kwapin@gmail.com
+  url      : https://kwap.io
+  github   : http://github.com/kwap
+  twitter  : http://twitter.com/o3tker
+  linkedin : http://linkedin.com/in/piotrkwapin
+
+# social settings
+og_locale: "en_US"
+twitter_card: "summary_large_image"
+twitter_site: "@o3tker"
+
+gems:
+  - bourbon
+  - jekyll-paginate
+
+# navbar pages
+navbar:
+  - slug : about
+    title: About
+  - slug : blog
+    title: Blog
+
+exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
