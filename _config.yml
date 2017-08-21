@@ -1,8 +1,8 @@
 
 # SEO settings
-title: "kwap"
-title2: "in space" # default: ""
-description: "blog about stuff"
+title: "kwap on tech & reality"
+title2: "" # default: ""
+description: "blog about tech & reality"
 keywords: "tech, thinking, books"
 url: https://kwap.io #kwap.github.io/kwap # site url
 baseurl: "" # apply repo name if use it under gh-pages branch
