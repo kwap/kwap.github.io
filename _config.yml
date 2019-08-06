@@ -1,16 +1,16 @@
 
 # SEO settings
-title: "kwap on tech & reality"
+title: "Kwap Consulting Piotr Kwapin"
 title2: "" # default: ""
-description: "blog about tech & reality"
+description: "I work with employees, managers, and teams to help them reach their full potential."
 keywords: "tech, thinking, books"
 url: https://kwap.io #kwap.github.io/kwap # site url
 baseurl: "" # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
 google_analytics: UA-XXXXX-XX
-repo: http://github.com/heiswayi/thinkspace
-disqus_shortname: "hnbloggithub"
+repo: https://github.com/kwap/kwap.github.io
+disqus_shortname: "geekbeing"
 twitter_username: "o3tker"
 comments: false
 
@@ -30,9 +30,9 @@ sass:
 # Author settings
 author:
   name     : "Piotr Kwapin"
-  job      : "Software Engineer, Thinker, Tinkerer"
-  bio      : "The truth is not for all men, but only for those who seek it."
-  thumb    : "https://en.gravatar.com/userimage/6180910/0847ddba8af46c077a45c25c69984d34.jpg?size=200"
+  job      : "Lead Consultant at Kwap Consulting"
+  bio      : "</br> Get in touch with me via <a href='http://linkedin.com/in/piotrkwapin'>LinkedIn</a> or drop me an email at <a href='mailto:piotr.kwapin@gmail.com'>piotr.kwapin@gmail.com</a>"
+  thumb    : "https://en.gravatar.com/userimage/6180910/ba6df19995b5a4fd3adfd54cae8b0bec.jpeg?size=200"
   email    : piotr.kwapin@gmail.com
   url      : https://kwap.io
   github   : http://github.com/kwap
