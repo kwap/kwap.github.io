@@ -1,12 +1,10 @@
-# Thinkspace v2.1
+# kwap.io Kwap Consulting
 
-Thinkspace is just another minimalist Jekyll theme which is best suit for technical writing, but not limited to. Good for personal blog type too or project-based blog. Disqus comment is included.
-
-[**Live Demo**](http://heiswayi.github.io/thinkspace/)
+[**Live Demo**](https://kwap.io/)
 
 ### Screenshot
 
-![Thinkspace Screenshot](http://i.imgur.com/IMQDB9e.png)
+![Thinkspace Screenshot]()
 
 ### License
 
