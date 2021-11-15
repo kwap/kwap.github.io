@@ -1,27 +1,31 @@
----
-layout: default
-title: Home
----
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-{% include intro.html %}
+  <title>「kωⱥթ」</title><!-- Begin Jekyll SEO tag v2.7.1 -->
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="「kωⱥթ」" />
+<meta name="author" content="Piotr '「kωⱥթ」' Kwapin" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="「kωⱥթ」" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="「kωⱥթ」" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/","author":{"@type":"Person","name":"Piotr '「kωⱥթ」' Kwapin"},"name":"「kωⱥթ」","@type":"WebSite","headline":"「kωⱥթ」","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="「kωⱥթ」" /><link rel="shortcut icon" type="image/x-icon" href="/logo.png" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head><body a="auto">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <header>
+  <h1>「kωⱥթ」</h1></header><ul><li>mój blog</li><ul><li>blog uczciwy, prawdziwy, dający do myślenia</li><li><a href="https://wpunkt.org/">https://wpunkt.org/</a></li></ul><li>mój instagram</li><ul><li>zdjęcia optymistyczne, radosne, czasem pokręcone</li><li><a href="https://instagram.com/o3tker/">https://instagram.com/o3tker/</a></li></ul><li>mój ćwierkacz</li><ul><li>głównie retweety rzeczy ciekawych i inspirujących</li><li><a href="https://twitter.com/o3tker/">https://twitter.com/o3tker/</a></li></ul></ul>
 
-<section class="post-list">
-  <div class="container">
-    {% for post in site.posts %}
-      {% unless post.next %}
-        <h2 class="category-title">{{ post.date | date: '%Y' }}</h2>
-      {% else %}
-        {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
-        {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
-        {% if year != nyear %}
-          <h2 class="category-title">{{ post.date | date: '%Y' }}</h2>
-        {% endif %}
-      {% endunless %}
-      <article class="post-item">
-        <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
-        <div class="article-title"><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></div>
-      </article>
-    {% endfor %}
-  </div>
-
-</section>
+      </div>
+    </main>
+  </body>
+</html>
