@@ -1,387 +1,326 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>kwap's manifesto</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23060906'/%3E%3Ctext x='5' y='24' font-family='monospace' font-weight='bold' font-size='24' fill='%2333ff66'%3EK%3C/text%3E%3Crect x='22' y='6' width='3' height='18' fill='%2333ff66' opacity='0.8'%3E%3Canimate attributeName='opacity' values='1;0;1' dur='1s' repeatCount='indefinite'/%3E%3C/rect%3E%3C/svg%3E">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kwap · I bring ideas to life.</title>
+<meta name="description" content="kwap: builder, mentor, zero-to-one. I bring ideas to life.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script>
+  // A choice made with the switch wins over the system's setting. Done before the page is drawn, so it never flashes.
+  try {
+    var saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
+  } catch (e) {}
+</script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
-
-  /* ── LIGHT THEME (default) ── */
-  :root, [data-theme="light"] {
-    --bg: #f4f0e8;
-    --bg-deep: #ece8df;
-    --text: #2a2a28;
-    --text-dim: #8a8578;
-    --accent: #1a6b3c;
-    --accent-glow: rgba(26, 107, 60, 0.08);
-    --accent2: #b35c00;
-    --accent2-glow: rgba(179, 92, 0, 0.06);
-    --border: #c8c2b6;
-    --border-bright: #9a9488;
-    --scanline-b: rgba(0, 0, 0, 0.015);
-    --vignette: rgba(0, 0, 0, 0.05);
+  /* The fonts are served from this site. Their licences are in the fonts folder. */
+  @font-face {
+    font-family: "Bricolage Grotesque";
+    font-weight: 500 800;
+    font-stretch: 75% 100%;
+    font-display: swap;
+    src: url("fonts/BricolageGrotesque.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-weight: 500;
+    font-display: swap;
+    src: url("fonts/IBMPlexMono-Medium.woff2") format("woff2");
   }
 
-  /* ── DARK THEME ── */
-  [data-theme="dark"] {
-    --bg: #060906;
-    --bg-deep: #0a0f0a;
-    --text: #ccddcc;
-    --text-dim: #446644;
-    --accent: #33ff66;
-    --accent-glow: rgba(51, 255, 102, 0.12);
-    --accent2: #ffaa22;
-    --accent2-glow: rgba(255, 170, 34, 0.15);
-    --border: #1a331a;
-    --border-bright: #2a5a2a;
-    --scanline-b: rgba(0, 0, 0, 0.08);
-    --vignette: rgba(0, 0, 0, 0.4);
+  :root {
+    --bg: #f1eee6;
+    --ink: #0d0d0d;
+    --dim: #57544c;
+    --accent: #4b2ff2;
+    --on-accent: #ffffff;
+    --rule: 3px;                   /* the thickness of the rules */
+    --edge: 18px;                  /* the space between the menu and the rule under it */
+    --pad: 28px;                   /* the page's side margins */
+    --page: min(100vw, 1280px);    /* the page's width */
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html {
-    font-size: 20px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-bright) var(--bg);
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #0d0d0d; --ink: #f1eee6; --dim: #a5a299; --accent: #cdfa3c; --on-accent: #0d0d0d; }
   }
+  :root[data-theme="dark"] { --bg: #0d0d0d; --ink: #f1eee6; --dim: #a5a299; --accent: #cdfa3c; --on-accent: #0d0d0d; }
 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 18px; scroll-behavior: smooth; }
   body {
     background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
-    line-height: 1.7;
-    min-height: 100vh;
-    overflow-x: hidden;
-    transition: background 0.4s ease, color 0.4s ease;
-  }
-
-  /* ── CRT SCANLINES ── */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 2px,
-      var(--scanline-b) 2px, var(--scanline-b) 4px
-    );
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at center, transparent 50%, var(--vignette) 100%);
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* ── LAYOUT ── */
-  .terminal { max-width: 76ch; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-  /* ── THEME TOGGLE ── */
-  .theme-toggle {
-    position: fixed;
-    top: 1.2rem;
-    right: 1.5rem;
-    z-index: 1001;
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    padding: 0.35rem 0.7rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-  }
-  .theme-toggle:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  /* ── HEADER ── */
-  .header-art {
-    color: var(--accent);
-    font-size: 0.75rem;
-    line-height: 1.15;
-    letter-spacing: 0.05em;
-    white-space: pre;
-    text-shadow: 0 0 10px var(--accent-glow);
-    overflow: hidden;
-  }
-
-  [data-theme="dark"] .header-art {
-    animation: flicker 4s infinite alternate;
-  }
-
-  @keyframes flicker {
-    0%, 95%, 100% { opacity: 1; }
-    96% { opacity: 0.85; }
-    97% { opacity: 1; }
-    98% { opacity: 0.9; }
-  }
-
-  /* ── PROMPT LINE ── */
-  .prompt-line {
-    color: var(--accent);
-    font-size: 0.8rem;
-    margin-top: 0.8rem;
-  }
-  .prompt-path { color: var(--text-dim); }
-  .cursor {
-    display: inline-block;
-    width: 0.55em;
-    height: 1.05em;
-    background: var(--accent);
-    vertical-align: text-bottom;
-    animation: blink 1s step-end infinite;
-    margin-left: 2px;
-  }
-  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-  .tagline {
-    color: var(--text-dim);
-    margin-top: 0.6rem;
-    font-size: 0.8rem;
-    font-style: italic;
-  }
-
-  /* ── DIVIDERS ── */
-  .divider {
-    color: var(--border);
-    margin: 1.8rem 0;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 0.8rem;
-    transition: color 0.4s ease;
-  }
-  .divider.bright { color: var(--border-bright); }
-
-  /* ── SECTIONS ── */
-  .section-label {
-    color: var(--accent2);
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-    text-shadow: 0 0 8px var(--accent2-glow);
-    transition: color 0.4s ease;
-  }
-  .section-label::before { content: '┌─ '; color: var(--border-bright); }
-
-  p { margin-bottom: 1rem; font-weight: 300; }
-
-  .highlight {
-    color: var(--accent);
+    color: var(--ink);
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
     font-weight: 500;
-    text-shadow: 0 0 6px var(--accent-glow);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s, color 0.25s;
   }
-  .accent2 { color: var(--accent2); }
-  .dim { color: var(--text-dim); }
-  em { font-style: italic; color: var(--accent); }
+  a { color: inherit; }
+  .page { max-width: 1280px; margin: 0 auto; padding: 0 var(--pad) 64px; }
 
-  /* ── VALUES GRID ── */
-  .values { display: grid; grid-template-columns: 1fr 1fr; gap: 0.2rem 2.5rem; margin: 0.5rem 0; }
-  .value-item { padding: 0.6rem 0; }
-  .value-name {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-shadow: 0 0 8px var(--accent-glow);
+  /* Heavy narrow capitals */
+  .name, .lede, .go, h3, .block h2 {
+    font-weight: 800;
+    font-stretch: 75%;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    word-spacing: 0.08em;
+    line-height: 0.88;
   }
-  .value-desc { font-size: 0.9rem; font-weight: 300; margin-top: 0.2rem; }
-
-  /* ── FOUR PILLARS ── */
-  .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 2.5rem; margin-top: 0.5rem; }
-  .pillar { padding: 0.6rem 0; }
-  .pillar-name {
-    color: var(--accent2);
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-shadow: 0 0 8px var(--accent2-glow);
-  }
-  .pillar-desc { font-size: 0.9rem; font-weight: 300; margin-top: 0.2rem; }
-
-  /* ── QUOTE ── */
-  .quote-block {
-    border-left: 2px solid var(--border-bright);
-    padding: 0.8rem 0 0.8rem 1.5rem;
-    margin: 0.5rem 0;
-  }
-  .quote-text { font-style: italic; font-weight: 300; font-size: 0.9rem; }
-  .quote-prelude { font-size: 0.9rem; font-weight: 400; margin-bottom: 0.8rem; }
-  .quote-author { color: var(--text-dim); font-size: 0.8rem; margin-top: 0.5rem; }
-
-  .manifesto-body p { font-size: 0.9rem; }
-
-  /* ── FOOTER ── */
-  .footer {
-    color: var(--border);
-    font-size: 0.7rem;
-    margin-top: 2rem;
-    text-align: center;
-    white-space: pre;
+  /* Labels */
+  .bar, .roles, .block h2 span, .practice b, .projects small, .links a, footer {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    font-stretch: 100%;
+    letter-spacing: 0.12em;
+    word-spacing: 0;
+    text-transform: uppercase;
+    line-height: 1.5;
   }
 
-  /* ── FADE IN ── */
-  .fade-section {
-    opacity: 0;
-    transform: translateY(6px);
-    animation: fadeUp 0.6s ease forwards;
+  /* Top bar */
+  .bar { display: flex; justify-content: space-between; align-items: center; padding: var(--edge) 0; border-bottom: var(--rule) solid var(--ink); }
+  .bar a { text-decoration: none; }
+  .bar a:hover { text-decoration: underline; }
+  .bar nav { display: flex; gap: 26px; align-items: center; }
+  .switch { font: inherit; letter-spacing: inherit; text-transform: inherit; background: var(--ink); color: var(--bg); border: 0; padding: 8px 12px; cursor: pointer; }
+  .switch:hover { background: var(--accent); color: var(--on-accent); }
+
+  /* The first screen: the top bar and the hero fill the window, so the rule under the button ends just above
+     the window's bottom edge, as far from it as the top rule is from the menu. On a very tall window it stops
+     growing once there would only be empty space to add. */
+  .first {
+    display: flex;
+    flex-direction: column;
+    min-height: min(100vh, 470px + 0.36 * var(--page));
+    min-height: min(100svh, 470px + 0.36 * var(--page));  /* svh: the part of the window the browser's own bars leave free */
+    padding-bottom: var(--edge);
   }
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-  .fade-section:nth-child(2)  { animation-delay: 0.05s; }
-  .fade-section:nth-child(3)  { animation-delay: 0.15s; }
-  .fade-section:nth-child(4)  { animation-delay: 0.3s; }
-  .fade-section:nth-child(5)  { animation-delay: 0.45s; }
-  .fade-section:nth-child(6)  { animation-delay: 0.55s; }
-  .fade-section:nth-child(7)  { animation-delay: 0.65s; }
-  .fade-section:nth-child(8)  { animation-delay: 0.75s; }
-  .fade-section:nth-child(9)  { animation-delay: 0.85s; }
-  .fade-section:nth-child(10) { animation-delay: 0.95s; }
-  .fade-section:nth-child(11) { animation-delay: 1.05s; }
-  .fade-section:nth-child(12) { animation-delay: 1.15s; }
-  .fade-section:nth-child(13) { animation-delay: 1.25s; }
-  .fade-section:nth-child(14) { animation-delay: 1.35s; }
+  /* Hero: the name as a tag, the sentence, and the invitation at the bottom */
+  .hero { flex: 1; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto 1fr auto; gap: 0 18px; align-items: center; padding-top: 36px; }
+  .name { background: var(--accent); color: var(--on-accent); font-size: 1.5rem; line-height: 1; padding: 7px 12px 8px; }
+  .roles { color: var(--dim); }
+  /* The sentence is as large as its space allows: two lines that fill the height, or a first line that fills
+     the width, whichever is smaller. cqh and cqw are 1% of this box's height and width. */
+  .stage {
+    --least: min((var(--page) - 2 * var(--pad)) / 4.55, 5.5rem);
+    grid-column: 1 / -1;
+    align-self: stretch;
+    container-type: size;
+    display: grid;
+    align-content: center;
+    min-height: calc(1.64 * var(--least));
+    margin-top: 30px;
+  }
+  .lede {
+    font-size: min(20vw, 250px);  /* for browsers that do not know cqh and cqw */
+    font-size: max(var(--least), min(100cqh / 1.64, 100cqw / 4.55));
+    font-optical-sizing: none;    /* one drawing of the letters at every size, so the first line is always 4.49 times the font size wide */
+    line-height: 0.82;
+    white-space: nowrap;
+    margin-left: -0.02em;
+  }
+  .lede em { display: block; font-style: normal; color: var(--accent); }
+  .act {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px 30px;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: var(--rule) solid var(--ink);
+    border-bottom: var(--rule) solid var(--ink);
+  }
+  .go { display: inline-flex; gap: 12px; text-decoration: none; background: var(--ink); color: var(--bg); font-size: 1.6rem; line-height: 1; padding: 18px 24px 20px; transition: background 0.15s, color 0.15s; }
+  .go:hover { background: var(--accent); color: var(--on-accent); }
+  .lines { font-size: 1.05rem; line-height: 1.45; }
 
-  @media (max-width: 600px) {
-    html { font-size: 18px; }
-    .terminal { padding: 1.2rem 1rem 3rem; }
-    .header-art { font-size: 0.48rem; }
-    .values, .pillars { grid-template-columns: 1fr; gap: 0; }
-    .theme-toggle { top: 0.8rem; right: 0.8rem; }
+  /* Sections: a numbered heading on a thick rule */
+  .block { margin-top: 88px; }
+  .block h2 { display: flex; align-items: baseline; gap: 14px; font-size: 1.6rem; line-height: 1; padding-bottom: 12px; border-bottom: var(--rule) solid var(--ink); }
+  .block h2 span { color: var(--dim); }
+
+  /* Values: one very large word per row */
+  .values article {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 24px;
+    align-items: end;
+    padding: 16px 16px 12px;
+    margin: 0 -16px;
+    border-bottom: var(--rule) solid var(--ink);
+  }
+  .values article:last-child { background: var(--accent); color: var(--on-accent); border-bottom: 0; }
+  .values h3 { font-size: clamp(3.4rem, 11vw, 8.4rem); line-height: 0.84; }
+  .values p { font-size: 1.05rem; max-width: 20em; padding-bottom: 6px; }
+
+  /* How I work: three columns divided by rules */
+  .how .items { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .how article { padding: 24px 24px 6px 0; margin-right: 24px; border-right: var(--rule) solid var(--ink); }
+  .how article:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+  .how h3 { font-size: 2.5rem; }
+  .how p { margin-top: 12px; }
+
+  /* Daily practice: four tiles. Each word hangs a fixed distance from the top, so the four line up. */
+  .practice .items { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 20px; }
+  .practice article { min-height: 240px; padding: 18px 20px 20px; background: var(--ink); color: var(--bg); border: var(--rule) solid var(--ink); }
+  .practice article:nth-child(even) { background: var(--bg); color: var(--ink); }
+  .practice article:last-child { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .practice b { display: block; }
+  .practice h3 { font-size: 2.5rem; margin-top: 84px; }
+  .practice p { font-size: 0.9rem; line-height: 1.4; margin-top: 8px; }
+
+  /* Projects */
+  .projects .items { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+  .projects article { display: flex; flex-direction: column; border: var(--rule) solid var(--ink); padding: 26px; transition: box-shadow 0.15s, transform 0.15s; }
+  .projects article:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--accent); }
+  .mark { width: 60px; height: 60px; display: block; }
+  .projects h3 { font-size: 3.1rem; margin-top: 24px; }
+  .projects p { margin-top: 10px; }
+  .projects small { margin-top: auto; padding-top: 18px; color: var(--dim); }
+  .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .links a { text-decoration: none; border: var(--rule) solid var(--ink); padding: 8px 13px; }
+  .links a:first-child { background: var(--ink); color: var(--bg); }
+  .links a:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+  footer { margin-top: 88px; padding-top: 18px; border-top: var(--rule) solid var(--ink); display: flex; justify-content: space-between; gap: 12px; }
+  footer a { text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    html { font-size: 17px; }
+    :root { --pad: 16px; }
+    .page { padding-bottom: 48px; }
+    .bar nav { gap: 14px; }
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; padding-top: 26px; }
+    .name { justify-self: start; }
+    .roles { margin-top: 12px; }
+    .stage { margin-top: 22px; }
+    .act { margin-top: 28px; }
+    .go { font-size: 1.35rem; }
+    .block { margin-top: 60px; }
+    .values article { grid-template-columns: 1fr; gap: 10px; }
+    .how .items { grid-template-columns: 1fr; }
+    .how article { border-right: 0; margin-right: 0; padding: 20px 0; border-bottom: var(--rule) solid var(--ink); }
+    .how article:last-child { border-bottom: 0; }
+    .practice .items { grid-template-columns: 1fr 1fr; }
+    .practice article { min-height: 190px; }
+    .practice h3 { font-size: 2rem; margin-top: 48px; }
+    .projects .items { grid-template-columns: 1fr; }
+    footer { flex-direction: column; }
   }
 </style>
 </head>
 <body>
+<div class="page">
 
-<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-  <span id="toggle-text">dark</span>
-</button>
+  <div class="first">
+  <header class="bar">
+    <a class="home" href="#">kwap.io</a>
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/kwap">GitHub</a>
+      <button class="switch" id="switch" type="button" aria-label="Switch between light and dark">dark</button>
+    </nav>
+  </header>
 
-<main class="terminal">
-
-  <div class="fade-section">
-    <div class="header-art" role="img" aria-label="KWAP">
- ██╗  ██╗██╗    ██╗ █████╗ ██████╗
- ██║ ██╔╝██║    ██║██╔══██╗██╔══██╗
- █████╔╝ ██║ █╗ ██║███████║██████╔╝
- ██╔═██╗ ██║███╗██║██╔══██║██╔═══╝
- ██║  ██╗╚███╔███╔╝██║  ██║██║
- ╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝</div>
-  </div>
-
-  <div class="fade-section">
-    <div class="prompt-line"><span class="prompt-path">~/manifesto</span> $ cat values.txt<span class="cursor"></span></div>
-    <div class="tagline">/* visionary catalyst · builder · zero-to-one */</div>
-  </div>
-
-  <div class="fade-section">
-    <div class="divider bright">════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</div>
-  </div>
-
-  <div class="fade-section">
-    <div class="section-label">Values</div>
-    <div class="values">
-      <div class="value-item">
-        <div class="value-name">› Freedom</div>
-        <div class="value-desc">The foundation. Space to think, choose, move, and create.</div>
-      </div>
-      <div class="value-item">
-        <div class="value-name">› Beauty</div>
-        <div class="value-desc">Deeply essential. In design, people, places, and ideas.</div>
-      </div>
-      <div class="value-item">
-        <div class="value-name">› Enthusiasm</div>
-        <div class="value-desc">Be bold. Be expressive. Be alive. Burn bright.</div>
-      </div>
-      <div class="value-item">
-        <div class="value-name">› Purpose</div>
-        <div class="value-desc">Serve humanity honestly. Profit follows — never leads.</div>
-      </div>
+  <section class="hero">
+    <h1 class="name">KWAP.</h1>
+    <p class="roles">builder · mentor · zero-to-one</p>
+    <div class="stage"><p class="lede">I bring ideas <em>to life.</em></p></div>
+    <div class="act">
+      <a class="go" href="https://www.linkedin.com/in/piotrkwapin/">Let's get you there <span aria-hidden="true">→</span></a>
+      <p class="lines">I'll help you reach your goal, or find it.<br>20 years in management and IT, on your side.</p>
     </div>
+  </section>
   </div>
 
-  <div class="fade-section">
-    <div class="divider">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</div>
-  </div>
-
-  <div class="fade-section">
-    <div class="section-label">Manifesto</div>
-    <div class="manifesto-body">
-      <p>Freedom is the prerequisite. It grants the space to think, choose, and act. Profit is necessary, but it cannot be the driver — my work must serve humanity honestly, ruling out industries that exploit rather than uplift.</p>
-      <p>With that clarity comes <span class="highlight">enthusiasm</span>. Bold, expressive, alive. I see beauty and simplicity everywhere. I want to make more of it.</p>
+  <section class="block values">
+    <h2><span>01</span>Values</h2>
+    <div class="items">
+      <article><h3>Freedom</h3><p>The foundation. Space to think, choose, move, and create.</p></article>
+      <article><h3>Beauty</h3><p>Deeply essential. In design, people, places, and ideas.</p></article>
+      <article><h3>Enthusiasm</h3><p>Be bold. Be expressive. Be alive. Burn bright.</p></article>
+      <article><h3>Purpose</h3><p>Serve humanity honestly. Profit follows — never leads.</p></article>
     </div>
-  </div>
+  </section>
 
-  <div class="fade-section">
-    <div class="divider">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</div>
-  </div>
-
-  <div class="fade-section">
-    <div class="section-label">Identity</div>
-    <div class="manifesto-body">
-      <p>I thrive in the <span class="highlight">zero-to-one</span> phase — where ideas take shape, strategies form, and prototypes get built. High emotional intelligence and strong intuition are central to how I work and how I lead.</p>
-      <p>I believe in a bias towards action: <span class="accent2">do, observe, learn, improve, repeat.</span> I have a natural drive to understand the <em>why</em> and <em>how</em> behind problems. I am comfortable where others hesitate — in the unknown. Busy work, pencil pushing, absurd rules, and politics drain me.</p>
-      <p>When purpose aligns with values, I become the force that brings ideas to life.</p>
+  <section class="block how">
+    <h2><span>02</span>How I work</h2>
+    <div class="items">
+      <article><h3>Zero to one.</h3><p>I do my best work where ideas take shape and first prototypes get built.</p></article>
+      <article><h3>Bias to action.</h3><p>Do, observe, learn, improve, repeat.</p></article>
+      <article><h3>Into the unknown.</h3><p>Comfortable where others hesitate. Busy work, absurd rules, and politics drain me.</p></article>
     </div>
-  </div>
+  </section>
 
-  <div class="fade-section">
-    <div class="divider">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</div>
-  </div>
-
-  <div class="fade-section">
-    <div class="section-label">Daily Practice</div>
-    <div class="pillars">
-      <div class="pillar">
-        <div class="pillar-name">create.</div>
-        <div class="pillar-desc">Write, build, draw, code, cook. Turn thought into reality.</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-name">consume.</div>
-        <div class="pillar-desc">Read books. Watch films. Study art. Good input sharpens good output.</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-name">move.</div>
-        <div class="pillar-desc">Walk, lift, run, dance. A stagnant body distorts thinking.</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-name">connect.</div>
-        <div class="pillar-desc">Keep a community. Shared reality keeps you sane.</div>
-      </div>
+  <section class="block practice">
+    <h2><span>03</span>Daily practice</h2>
+    <div class="items">
+      <article><b>1</b><h3>create.</h3><p>Write, build, draw, code, cook. Turn thought into reality.</p></article>
+      <article><b>2</b><h3>consume.</h3><p>Read books. Watch films. Study art. Good input sharpens good output.</p></article>
+      <article><b>3</b><h3>move.</h3><p>Walk, lift, run, dance. A stagnant body distorts thinking.</p></article>
+      <article><b>4</b><h3>connect.</h3><p>Keep a community. Shared reality keeps you sane.</p></article>
     </div>
-  </div>
+  </section>
 
-  <div class="fade-section">
-    <div class="divider bright">════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</div>
-  </div>
+  <section class="block projects" id="projects">
+    <h2><span>04</span>Projects</h2>
+    <div class="items">
+      <article>
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+          <polygon points="0,0 100,0 100,40 0,48" fill="currentColor"/>
+          <polygon points="0,55 56.5,50.5 44.5,100 0,100" fill="currentColor"/>
+          <polygon points="63.5,49.9 100,47 100,100 51.5,100" fill="#3d8fe6"/>
+        </svg>
+        <h3>Komawari</h3>
+        <p>Read comics on the PS Vita, one panel at a time.</p>
+        <small>Python · C · SDL2</small>
+        <div class="links">
+          <a href="https://kwap.io/komawari/">kwap.io/komawari →</a>
+          <a href="https://github.com/kwap/komawari">Code</a>
+        </div>
+      </article>
+      <article>
+        <img class="mark" src="img/linux-whisper.svg" alt="">
+        <h3>Linux Whisper</h3>
+        <p>Local, privacy-focused speech-to-text for Linux. No cloud. No tracking.</p>
+        <small>Rust</small>
+        <div class="links">
+          <a href="https://kwap.io/linux-whisper/">kwap.io/linux-whisper →</a>
+          <a href="https://github.com/kwap/linux-whisper">Code</a>
+        </div>
+      </article>
+    </div>
+  </section>
 
-  <div class="fade-section">
-    <div class="footer">
-┌───────────────────────────────────┐
-│  served from the void · est. now  │
-└───────────────────────────────────┘</div>
-  </div>
+  <footer>
+    <span>served from the void · est. now</span>
+    <nav><a href="https://github.com/kwap">GitHub ↗</a></nav>
+  </footer>
 
-</main>
-
+</div>
 <script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    html.setAttribute('data-theme', next);
-    document.getElementById('toggle-text').textContent = next === 'light' ? 'dark' : 'light';
-  }
+  // The switch shows the look it changes to, and remembers the choice.
+  (function () {
+    var root = document.documentElement;
+    var button = document.getElementById("switch");
+    function current() {
+      return root.getAttribute("data-theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    }
+    function label() { button.textContent = current() === "dark" ? "light" : "dark"; }
+    button.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      label();
+    });
+    label();
+  })();
 </script>
 </body>
 </html>
