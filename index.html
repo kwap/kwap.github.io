@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
 <meta name="description" content="kwap: builder, mentor, zero-to-one. I bring ideas to life.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <script>
-  // A choice made with the switch wins over the system's setting. Done before the page is drawn, so it never flashes.
+  // The page is light unless the visitor chose dark with the switch. Done before the page is drawn, so it never flashes.
   try {
     var saved = localStorage.getItem("theme");
     if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
@@ -39,9 +39,6 @@
     --edge: 18px;                  /* the space between the menu and the rule under it */
     --pad: 28px;                   /* the page's side margins */
     --page: min(100vw, 1280px);    /* the page's width */
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #0d0d0d; --ink: #f1eee6; --dim: #a5a299; --accent: #cdfa3c; --on-accent: #0d0d0d; }
   }
   :root[data-theme="dark"] { --bg: #0d0d0d; --ink: #f1eee6; --dim: #a5a299; --accent: #cdfa3c; --on-accent: #0d0d0d; }
 
@@ -310,7 +307,7 @@
     var root = document.documentElement;
     var button = document.getElementById("switch");
     function current() {
-      return root.getAttribute("data-theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      return root.getAttribute("data-theme");
     }
     function label() { button.textContent = current() === "dark" ? "light" : "dark"; }
     button.addEventListener("click", function () {
